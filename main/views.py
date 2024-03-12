@@ -15,6 +15,9 @@ class WarehouseCheckView(GenericAPIView):
         quantity = request.data.get('quantity')
 
         try:
+
+            # checking product and getting materials that belongs to product
+
             product = Product.objects.get(pk=product_id)
             materials = ProductMaterial.objects.filter(product=product)
         except Product.DoesNotExist:
@@ -25,11 +28,15 @@ class WarehouseCheckView(GenericAPIView):
             warehouse_data = Warehouse.objects.filter(material=material.material).first()
             material_data = {}
             material_data['material_name'] = material.material.name
+
+            # checking quantities of material and warehouse
+
             if warehouse_data and warehouse_data.remainder >= material.quantity:
                 material_data['warehouse_id'] = warehouse_data.id
                 material_data['qty'] = warehouse_data.remainder - material.quantity
                 material_data['price'] = warehouse_data.price
             else:
+                # returning null if there is no enough material
                 material_data['warehouse_id'] = None
                 material_data['qty'] = warehouse_data.remainder
                 material_data['price'] = None
