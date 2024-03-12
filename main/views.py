@@ -1,3 +1,8 @@
+
+
+# THERE IS NOT DONE CREATE, DELETE OF DATAS YET.
+# YOU CAN DO IT (CREATE, DELETE) MANUALLY BY ENTERING DATABASE.
+
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
